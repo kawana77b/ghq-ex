@@ -1,8 +1,8 @@
 # ghq-ex
 
-CLI commands for extended operation of ghq
+CLI commands for extended operation of [ghq](https://github.com/x-motemen/ghq)
 
-**Note: This command requires 'ghq' and 'peco' to be installed.**
+**Note: This command requires [ghq](https://github.com/x-motemen/ghq), [peco](https://github.com/peco/peco), and [vscode](https://code.visualstudio.com/) to be installed.**
 
 ## Usage
 
