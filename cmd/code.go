@@ -4,7 +4,7 @@ import (
 	"errors"
 	"os/exec"
 
-	"github.com/kawana77b/ghq-ex/internal/ghq"
+	"github.com/kawana77b/ghq-ex/cmd/cmdutil"
 	"github.com/spf13/cobra"
 )
 
@@ -36,26 +36,14 @@ func runCode(cmd *cobra.Command, args []string) error {
 		return errors.New("code command not found")
 	}
 
-	ghqCmd := ghq.NewGhqCommand()
-	if cmd == nil {
-		return errors.New("ghq command not found")
-	}
-
-	g, err := ghqCmd.CreateGhq()
+	g, err := cmdutil.MustGetGhq()
 	if err != nil {
 		return err
 	}
 
-	name := ""
-	if len(args) > 0 {
-		name = args[0]
-	}
-
-	if name == "" {
-		name, err = g.ChoiceRepoNameByPeco()
-		if err != nil {
-			return err
-		}
+	name, err := cmdutil.GetRepositoryName(g, args)
+	if err != nil {
+		return err
 	}
 
 	repo := g.Find(name)

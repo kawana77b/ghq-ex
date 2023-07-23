@@ -1,10 +1,9 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 
-	"github.com/kawana77b/ghq-ex/internal/ghq"
+	"github.com/kawana77b/ghq-ex/cmd/cmdutil"
 	"github.com/spf13/cobra"
 )
 
@@ -32,12 +31,7 @@ func init() {
 }
 
 func runCleanup(cmd *cobra.Command, args []string) error {
-	ghqCmd := ghq.NewGhqCommand()
-	if cmd == nil {
-		return errors.New("ghq command not found")
-	}
-
-	g, err := ghqCmd.CreateGhq()
+	g, err := cmdutil.MustGetGhq()
 	if err != nil {
 		return err
 	}
