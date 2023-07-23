@@ -11,7 +11,7 @@ import (
 // cleanupCmd represents the cleanup command
 var cleanupCmd = &cobra.Command{
 	Use:   "cleanup",
-	Short: "",
+	Short: "Clean up empty folders in the ghq folder",
 	Long:  ``,
 	Args:  cobra.MatchAll(cobra.MaximumNArgs(0)),
 	RunE:  runCleanup,

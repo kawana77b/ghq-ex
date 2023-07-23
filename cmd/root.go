@@ -1,6 +1,3 @@
-/*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-*/
 package cmd
 
 import (
@@ -13,9 +10,12 @@ var Version string = "0.0.1"
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:     "ghq-ex",
-	Short:   "",
-	Long:    ``,
+	Use:   "ghq-ex",
+	Short: "Extension operations using ghq",
+	Long: `Extension operations using ghq. 
+	
+This command requires 'ghq' and 'peco' to be installed.
+	`,
 	Version: Version,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
