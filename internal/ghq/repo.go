@@ -3,6 +3,7 @@ package ghq
 import (
 	"errors"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 )
@@ -58,4 +59,32 @@ func (r *Repository) Remove() error {
 	}
 
 	return os.RemoveAll(r.path)
+}
+
+func (r *Repository) RemoteUrl() string {
+	// 現在のワーキングディレクトリを取得
+	wd, err := os.Getwd()
+	defer os.Chdir(wd)
+
+	if err != nil {
+		return ""
+	}
+
+	// このリポジトリに移動する
+	if err := os.Chdir(r.path); err != nil {
+		return ""
+	}
+
+	bytes, err := exec.Command("git", "remote", "get-url", "origin").Output()
+	if err != nil {
+		return ""
+	}
+
+	url := strings.TrimSpace(string(bytes))
+	if strings.HasPrefix(url, "git@") {
+		url = strings.Replace(url, ":", "/", 1)
+		url = strings.Replace(url, "git@", "https://", 1)
+	}
+
+	return url
 }
