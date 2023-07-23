@@ -1,7 +1,10 @@
 package util
 
 import (
+	"errors"
 	"os"
+	"os/exec"
+	"runtime"
 	"sort"
 	"strings"
 )
@@ -18,4 +21,20 @@ func SortByPathDepth(paths []string) []string {
 	})
 
 	return paths
+}
+
+func OpenURL(url string) error {
+	var err error
+	switch runtime.GOOS {
+	case "windows":
+		err = exec.Command("cmd", "/c", "start", url).Start()
+	case "darwin":
+		err = exec.Command("open", url).Start()
+	case "linux":
+		err = exec.Command("xdg-open", url).Start()
+	default:
+		err = errors.New("unsupported platform")
+	}
+
+	return err
 }
