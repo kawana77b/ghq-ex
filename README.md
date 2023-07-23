@@ -20,4 +20,5 @@ Available Commands:
   help        Help about any command
   remove      Remove the repository given as a selection or argument
   show        Outputs the full path to the repository given as a selection or argument
+  update      Update the ghq repository all at once
 ```
