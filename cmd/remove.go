@@ -4,7 +4,9 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/Songmu/prompter"
 	"github.com/kawana77b/ghq-ex/cmd/cmdutil"
+	"github.com/logrusorgru/aurora/v4"
 	"github.com/spf13/cobra"
 )
 
@@ -47,6 +49,13 @@ func runRemove(cmd *cobra.Command, args []string) error {
 		return errors.New("repository not found")
 	}
 
+	fmt.Printf("You are trying to DELETE this local repository:\n")
+	fmt.Println(aurora.Sprintf(aurora.Cyan("\t\t%s\n"), repo.Name()))
+	isYes := prompter.YN("Are you sure?", false)
+	if !isYes {
+		return nil
+	}
+
 	if err := repo.Remove(); err != nil {
 		return err
 	}
@@ -55,6 +64,7 @@ func runRemove(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	fmt.Println()
 	fmt.Printf("Remove %s\n", repo.Name())
 
 	return nil
