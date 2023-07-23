@@ -11,7 +11,7 @@ import (
 // showCmd represents the show command
 var showCmd = &cobra.Command{
 	Use:   "show",
-	Short: "",
+	Short: "Outputs the full path to the repository given as a selection or argument",
 	Long:  ``,
 	Args:  cobra.MatchAll(cobra.MaximumNArgs(1)),
 	RunE:  runShow,

@@ -11,7 +11,7 @@ import (
 // removeCmd represents the remove command
 var removeCmd = &cobra.Command{
 	Use:   "remove",
-	Short: "",
+	Short: "Remove the repository given as a selection or argument",
 	Long:  ``,
 	Args:  cobra.MatchAll(cobra.MaximumNArgs(1)),
 	RunE:  runRemove,
