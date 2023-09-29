@@ -88,3 +88,29 @@ func (r *Repository) RemoteUrl() string {
 
 	return url
 }
+
+// リポジトリの最新のタグ名を取得する. タグがない場合は空文字を返す
+func (r *Repository) GetLatestTagName() string {
+	if !r.Exists() {
+		return ""
+	}
+
+	// 現在のワーキングディレクトリを取得
+	wd, err := os.Getwd()
+	defer os.Chdir(wd)
+	if err != nil {
+		return ""
+	}
+
+	// このリポジトリに移動する
+	if err := os.Chdir(r.path); err != nil {
+		return ""
+	}
+
+	bytes, err := exec.Command("git", "describe", "--tags", "--abbrev=0").Output()
+	if err != nil {
+		return ""
+	}
+
+	return strings.TrimSpace(string(bytes))
+}
