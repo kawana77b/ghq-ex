@@ -4,6 +4,7 @@ import (
 	"errors"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"runtime"
 	"sort"
 	"strings"
@@ -23,6 +24,8 @@ func SortByPathDepth(paths []string) []string {
 	return paths
 }
 
+// URLを規定ブラウザで開く.
+// Linuxの場合、xdg-openコマンドを使用する. GUI環境である必要がある
 func OpenURL(url string) error {
 	var err error
 	switch runtime.GOOS {
@@ -37,4 +40,29 @@ func OpenURL(url string) error {
 	}
 
 	return err
+}
+
+// 指定したディレクトリ以下のファイルを再帰的に取得する.
+// ignoreHiddenDirがtrueの場合、隠しディレクトリは無視する.
+// ignoreDotGitがtrueの場合、.gitディレクトリは無視する. これはignoreHiddenDirでも無視される、内容のため、falseの場合のみ効果がある
+func GetFiles(dir string, ignoreHiddenDir bool, ignoreDotGit bool) ([]string, error) {
+	files := []string{}
+
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if ignoreHiddenDir && info.IsDir() && strings.HasPrefix(info.Name(), ".") {
+			return filepath.SkipDir
+		}
+
+		if ignoreDotGit && info.IsDir() && info.Name() == ".git" {
+			return filepath.SkipDir
+		}
+
+		if !info.IsDir() {
+			files = append(files, path)
+		}
+
+		return nil
+	})
+
+	return files, err
 }
