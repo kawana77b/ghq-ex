@@ -52,6 +52,19 @@ func runZip(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	getVersion := func() string {
+		version := repo.GetLatestTagName()
+		if len(version) == 0 {
+			return "v0.0.1"
+		}
+
+		return version
+	}
+
+	repoName := filepath.Base(repo.Path())
+	version := getVersion()
+	validRepoNameInGolang := fmt.Sprintf("%s@%s", repoName, version)
+
 	// ビルダにファイルを追加
 	builder := util.NewZipFileBuilder()
 	for _, file := range files {
@@ -59,6 +72,9 @@ func runZip(cmd *cobra.Command, args []string) error {
 			name := strings.Replace(path, root, "", 1)
 			name = strings.ReplaceAll(name, "\\", "/") // Windows対応
 			name = strings.TrimPrefix(name, "/")       // 先頭の / を削除
+
+			// リポジトリ名をGOで有効なフォルダ名に置換する
+			name = strings.Replace(name, repoName, validRepoNameInGolang, 1)
 
 			return name
 		}
@@ -74,18 +90,7 @@ func runZip(cmd *cobra.Command, args []string) error {
 	}
 
 	// zipファイルを作成
-	getVersion := func() string {
-		version := repo.GetLatestTagName()
-		if len(version) == 0 {
-			return "v0.0.1"
-		}
-
-		return version
-	}
-
-	repoName := filepath.Base(repo.Path())
-	version := getVersion()
-	fileName := fmt.Sprintf("%s@%s.zip", repoName, version)
+	fileName := fmt.Sprintf("%s.zip", validRepoNameInGolang)
 	filePath := filepath.Join(wd, fileName)
 	if err := builder.Create(filePath); err != nil {
 		return err
