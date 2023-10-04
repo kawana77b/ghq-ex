@@ -22,4 +22,14 @@ Available Commands:
   remove      Remove the repository given as a selection or argument
   show        Outputs the full path to the repository given as a selection or argument
   update      Update the ghq repository all at once
+  zip         Create a zip file to upload to Go's package registry
 ```
+
+## What is this?
+
+I really like [ghq](https://github.com/x-motemen/ghq) as a management tool for git repositories and this tool is my personal extension tool.
+I am creating it with as few arguments as possible to make it more user-friendly and easy to use.
+
+Since this is a very personal tool, we will not actively maintain it as FOSS.  
+However, we welcome any PR, feedback, opinions, issues, etc., including refactoring and enhancements.  
+Forks and other uses do not claim heavily instead of taking no responsibility for them. Please feel free to do so, respecting the license of the dependencies.
