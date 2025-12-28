@@ -1,8 +1,6 @@
 module github.com/kawana77b/ghq-ex
 
-go 1.22
-
-toolchain go1.22.3
+go 1.24.11
 
 require (
 	github.com/Songmu/prompter v0.5.1
