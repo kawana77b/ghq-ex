@@ -5,7 +5,7 @@ go 1.24.11
 require (
 	github.com/Songmu/prompter v0.5.1
 	github.com/logrusorgru/aurora/v4 v4.0.0
-	github.com/spf13/cobra v1.10.1
+	github.com/spf13/cobra v1.10.2
 )
 
 require (
